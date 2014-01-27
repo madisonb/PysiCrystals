@@ -4,16 +4,26 @@
 from vector import Vector
 
 class Wave(object):
-
+    myDebug = None
     theta = None
     thetaDelta = None
     centerX = None
     centerY = None
     waveLength = None
     color = None
+    speed = None
+    direction = None
 
-    def __init__(self):
-        pass
+    def __init__(self, debug, direction, theta, thetaDelta, cX, cY, len, col, speed):
+    	self.myDebug = debug
+    	self.direction = direction
+    	self.theta = theta
+    	self.thetaDelta = thetaDelta
+    	self.centerX = cX
+    	self.centerY = cY
+    	self.waveLength = len
+    	self.color = col
+    	self.speed = speed
     
     def getValue(self, x, y):
         """
@@ -21,7 +31,7 @@ class Wave(object):
         
         @param x: the x coordinate
         @param y: the y coordinate
-        @return: the value of the wave between 0 and 1
+        @return: the value of the wave between -1 and 1
         """
         raise NotImplementedError()
         
@@ -29,7 +39,7 @@ class Wave(object):
         """
         Moves the wave one time step
         """
-        theta += thetaDelta
+        self.theta += self.thetaDelta
         
     def getColor(self):
         """

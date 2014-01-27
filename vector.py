@@ -9,6 +9,11 @@ class Vector(object):
     y = None
 
     def __init__(self, x, y):
+        """
+        2d vector class
+        @param x: x component
+        @param y: y component
+        """
         self.x = x
         self.y = y
         
@@ -18,21 +23,21 @@ class Vector(object):
         """
         return self.x * v2.x + self.y * v2.y
 		
-	def length(self):
+    def length(self):
 	    """
 	    Vector Length
 	    """
-        return math.sqrt(self.x * self.x + self.y * self.y)
+	    return math.sqrt(self.x * self.x + self.y * self.y)
 		
-	def project(self, b):
+    def project(self, b):
 	    """
-	    Vector Projection
-	    @return: The vector created when self is projected onto b
-	    """
-        proj = Vector(0, 0)
-        val = self.dot(b) / b.dot(b)
-        proj.x = val * b.x
-        proj.y = val * b.y
-        return proj
+        Vector Projection
+        @return: The vector created when self is projected onto b
+        """
+	    proj = Vector(0, 0)
+	    val = self.dot(b) / b.dot(b)
+	    proj.x = val * b.x
+	    proj.y = val * b.y
+	    return proj
 
 
