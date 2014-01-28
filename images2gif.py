@@ -63,7 +63,7 @@ Usefull links
   * http://www.w3.org/Graphics/GIF/spec-gif89a.txt
 
 """
-# todo: This module should be part of imageio (or at least based on)
+# todo: use FreeImage instead of PIL
 
 import os, time
 
@@ -230,7 +230,7 @@ class GifWriter:
         -------
           * 0 - No disposal specified.
           * 1 - Do not dispose. The graphic is to be left in place.
-          * 2 - Restore to background color. The area used by the graphic 
+          * 2 -	Restore to background color. The area used by the graphic 
             must be restored to the background color.
           * 3 -	Restore to previous. The decoder is required to restore the
             area overwritten by the graphic with what was there prior to 
@@ -410,10 +410,7 @@ class GifWriter:
         # Obtain palette for all images and count each occurance
         palettes, occur = [], []
         for im in images:
-            palette = getheader(im)[1]
-            if not palette:
-                palette = PIL.ImagePalette.ImageColor
-            palettes.append(palette)
+            palettes.append( getheader(im)[1] )
         for palette in palettes:
             occur.append( palettes.count( palette ) )
         
@@ -435,9 +432,9 @@ class GifWriter:
                 appext = self.getAppExt(loops)
         
                 # Write
-                fp.write(header.encode('utf-8'))
+                fp.write(header)
                 fp.write(globalPalette)
-                fp.write(appext.encode('utf-8'))
+                fp.write(appext)
         
                 # Next frame is not the first
                 firstFrame = False
@@ -456,13 +453,13 @@ class GifWriter:
                 # Write local header
                 if (palette != globalPalette) or (disposes[frames] != 2):
                     # Use local color palette
-                    fp.write(graphext.encode('utf-8'))
-                    fp.write(lid.encode('utf-8')) # write suitable image descriptor
+                    fp.write(graphext)
+                    fp.write(lid) # write suitable image descriptor
                     fp.write(palette) # write local color table
-                    fp.write('\x08'.encode('utf-8')) # LZW minimum size code
+                    fp.write('\x08') # LZW minimum size code
                 else:
                     # Use global color palette
-                    fp.write(graphext.encode('utf-8'))
+                    fp.write(graphext)
                     fp.write(imdes) # write suitable image descriptor
         
                 # Write image data
@@ -472,7 +469,7 @@ class GifWriter:
             # Prepare for next round
             frames = frames + 1
         
-        fp.write(";".encode('utf-8'))  # end gif
+        fp.write(";")  # end gif
         return frames
     
 
@@ -814,7 +811,7 @@ class NeuQuant:
             return self.a_s[(alpha, rad)]
         except KeyError:
             length = rad*2-1
-            mid = int(length//2)
+            mid = length/2
             q = np.array(list(range(mid-1,-1,-1))+list(range(-1,mid)))
             a = alpha*(rad*rad - q*q)/(rad*rad)
             a[mid] = 0
@@ -894,7 +891,7 @@ class NeuQuant:
         alpha = self.INITALPHA
         
         i = 0;
-        rad = biasRadius * 2**self.RADIUSBIASSHIFT
+        rad = biasRadius >> self.RADIUSBIASSHIFT
         if rad <= 1:
             rad = 0
         
@@ -942,7 +939,7 @@ class NeuQuant:
             if i%delta == 0:
                 alpha -= alpha / alphadec
                 biasRadius -= biasRadius / self.RADIUSDEC
-                rad = biasRadius * 2**self.RADIUSBIASSHIFT
+                rad = biasRadius >> self.RADIUSBIASSHIFT
                 if rad <= 1:
                     rad = 0
         

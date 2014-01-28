@@ -14,8 +14,8 @@ class Vector(object):
         @param x: x component
         @param y: y component
         """
-        self.x = x
-        self.y = y
+        self.x = float(x)
+        self.y = float(y)
         
     def dot(self, v2):
         """

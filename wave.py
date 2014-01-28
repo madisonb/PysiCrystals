@@ -17,13 +17,13 @@ class Wave(object):
     def __init__(self, debug, direction, theta, thetaDelta, cX, cY, len, col, speed):
     	self.myDebug = debug
     	self.direction = direction
-    	self.theta = theta
-    	self.thetaDelta = thetaDelta
-    	self.centerX = cX
-    	self.centerY = cY
-    	self.waveLength = len
+    	self.theta = float(theta)
+    	self.thetaDelta = float(thetaDelta)
+    	self.centerX = int(cX)
+    	self.centerY = int(cY)
+    	self.waveLength = float(len)
     	self.color = col
-    	self.speed = speed
+    	self.speed = float(speed)
     
     def getValue(self, x, y):
         """

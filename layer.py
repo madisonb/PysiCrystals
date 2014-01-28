@@ -27,10 +27,10 @@ class Layer(object):
             wave = None
             if coords == 'cartesian':
                 wave = CartesianWave(self.myDebug, vec, 0, tD, width / 2,
-                                     height / 2, len, (256, 256, 256), speed)
+                                     height / 2, len, (255, 255, 255), speed)
             else:
                 wave = PolarWave(self.myDebug, vec, 0, tD, width / 2, 
-        	                     height / 2, len, (256, 256, 256), speed)
+        	                     height / 2, len, (255, 255, 255), speed)
             self.waves.append(wave)
             start += step
         
@@ -61,7 +61,7 @@ class Layer(object):
         """
         Updates the waves one iteration
         """
-        for i in range(nWaves):
+        for i in range(len(self.waves)):
             self.waves[i].update()
 
 

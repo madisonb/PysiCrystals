@@ -27,10 +27,11 @@ class CartesianWave(Wave):
 						
         # adjust for sign on each side of the vector
         p = v1.dot(n)
-        sign = 1
+        sign = 1.0
         if p > 0:
-            sign = -1
+            sign = -1.0
 						
+        #print self.waveLength
         #print math.sin(self.theta + sign * l / self.waveLength)
         return math.sin(self.theta + sign * l / self.waveLength);
         
